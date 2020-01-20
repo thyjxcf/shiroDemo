@@ -1,4 +1,4 @@
-package com.hzgg.test.service;
+package com.hzgg.test.mapper;
 
 import com.hzgg.test.domain.ShiroUser;
 
@@ -6,11 +6,9 @@ import com.hzgg.test.domain.ShiroUser;
  * Designed By luf
  *
  * @author luf
- * @date 2019/12/3 20:58
+ * @date 2019/12/5 10:56
  */
-public interface UserService {
-
+public interface ShiroUserMapper {
     public ShiroUser findByName(String name);
-
-    public ShiroUser findById(Integer id);
+    public ShiroUser findById(Integer Id);
 }

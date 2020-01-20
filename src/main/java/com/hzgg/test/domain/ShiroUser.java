@@ -1,38 +1,23 @@
 package com.hzgg.test.domain;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 /**
  * Designed By luf
  *
  * @author luf
  * @date 2019/12/3 20:46
  */
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class ShiroUser {
 
-    private long id;
+    private Integer id;
     private String name;
     private String password;
+    private String perms;
 
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
 }

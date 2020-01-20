@@ -2,11 +2,14 @@ package com.hzgg.test.shiro;
 
 import com.hzgg.test.domain.ShiroUser;
 import com.hzgg.test.service.UserService;
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
+import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthenticatingRealm;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -26,7 +29,16 @@ public class UesrRealm extends AuthorizingRealm {
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
         System.out.println("执行授权逻辑");
-        return null;
+        //给资源进行授权
+        SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
+        //添加资源授权字符串
+//        simpleAuthorizationInfo.addStringPermission("user:add");
+        //获取当前登陆用户
+        Subject subject  = SecurityUtils.getSubject();
+        ShiroUser shiroUser = (ShiroUser) subject.getPrincipal();
+        ShiroUser dbUser = userService.findById(shiroUser.getId());
+        simpleAuthorizationInfo.addStringPermission(dbUser.getPerms());
+        return simpleAuthorizationInfo;
     }
 
     /**
@@ -55,6 +67,6 @@ public class UesrRealm extends AuthorizingRealm {
 //        }
         //2.判断密码
 
-        return new SimpleAuthenticationInfo("",token.getPassword(),"");
+        return new SimpleAuthenticationInfo(user,token.getPassword(),"");
     }
 }
